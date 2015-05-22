@@ -1,11 +1,25 @@
 <?php
 
-include('classes/conexao.php');
+$url = $_SERVER['REQUEST_URI'];
+$url = explode('/', $url);
+$router = $url[1];
 
-$objConexao = new conexao();
-$stmt = $objConexao->conn->prepare('SELECT * FROM tbl_teste');
-$stmt->execute();
+switch ($router) {
+	case 'profile':
+		require('classes/user.php');
+		$user = new user();
 
-$retorno = $stmt->fetch();
+		$user->viewUser();
+	break;
 
-print_r($retorno);
+	case 'create_profile':
+		require('classes/user.php');
+		$user = new user();
+
+		$user->createUser();
+	break;
+	
+	default:
+		echo 'default';
+	break;
+}
