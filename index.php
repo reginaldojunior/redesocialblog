@@ -1,5 +1,8 @@
 <?php
 
+require('helpers/libs/Smarty.class.php');
+$smarty = new Smarty();
+
 $url = $_SERVER['REQUEST_URI'];
 $url = explode('/', $url);
 $router = $url[1];
@@ -10,13 +13,12 @@ switch ($router) {
 		$user = new user();
 
 		$user->viewUser();
+
+		$smarty->display('profile/index.tpl');
 	break;
 
 	case 'create_profile':
-		require('classes/user.php');
-		$user = new user();
-
-		$user->createUser();
+	
 	break;
 	
 	default:

@@ -1,5 +1,5 @@
 <?php
-require('config/config.php');
+require('configs/config.php');
 
 class conexao {
 	public $conn = '';
