@@ -14,13 +14,8 @@ switch ($router) {
 
 		$user->viewUser();
 
-		$smarty->display('profile/index.tpl');
+		$smarty->display('profile/index.html');
 	break;
-
-	case 'create_profile':
-	
-	break;
-	
 	default:
 		echo 'default';
 	break;

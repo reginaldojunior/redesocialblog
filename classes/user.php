@@ -8,6 +8,12 @@
 
 require('conexao.php');
 class user extends conexao {
+	public $nome;
+	public $sobrenome;
+	public $date;
+	public $login;
+	public $senha;
+	public $ativo;
 
 	/**
 	* Função para criar usuario
@@ -35,7 +41,7 @@ class user extends conexao {
 	}
 	
 	/**
-	* Função para destativar o usuario
+	* Função para destatipublic o usuario
 	**/
 	public function deleteUser() {
 		return true;
