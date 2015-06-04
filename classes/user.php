@@ -17,10 +17,10 @@ class user extends conexao {
 
 	/**
 	* Função para criar usuario
-	* @param $dados [array] com os dados nomeados de acordo com as coluna do banco;
 	**/
 	public function createUser() {
-		$stmt = $this->conn->prepare('INSERT INTO usuario (nome,sobrenome,login,senha,ativo) VALUES(:nome, :sobrenome, :login, :senha, :ativo)');
+		$stmt = $this->conn->prepare('INSERT INTO usuario (nome,sobrenome,login,senha,ativo) 
+											 	  VALUES  (:nome, :sobrenome, :login, :senha, :ativo)');
 		
 		$dados = array(
 			'nome' 		=> $this->nome,
@@ -56,6 +56,57 @@ class user extends conexao {
 	**/
 	public function deleteUser() {
 		return true;
+	}
+
+	/**
+	* Função que valida ser o usuario existe no banco com os dados de email e senha
+	* @return Boolean true o usuario existe, false o usuario não existe (Obvio)
+	**/
+	public function validateUser() {
+		if (isset($_SESSION['usuario']) && !empty($_SESSION['usuario'])) {
+			return true;
+		}
+
+		$retorno = $this->findUserByEmailAndSenha();
+
+		if (!empty($retorno)) {
+			return true;
+		}
+
+		return false;
+	}
+	
+	/**
+	* Função para processar o login do usuario, deve ser chamada após o validateUser
+	*/
+	public function processLogin() {
+		$retorno = $this->findUserByEmailAndSenha();
+
+		if (!$retorno) {
+			return false;
+		}
+
+		$_SESSION['usuario'] = $retorno;
+
+		return true;
+	}
+
+	public function findUserByEmailAndSenha() {
+		$stmt = $this->conn->prepare('SELECT * FROM usuario WHERE login = :login AND senha = :senha');
+
+		$dados = array(
+			'login' => $this->login,
+			'senha' => $this->senha
+		);
+
+		$stmt->execute($dados);
+		$retorno = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		if (!empty($retorno)) {
+			return $retorno;
+		}
+
+		return false;
 	}
 
 	/**

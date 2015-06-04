@@ -12,3 +12,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
 <body>
+
+{foreach from=$alerts item=alert}
+<div class="alert alert-{$alert.tipo}" role="alert">{$alert.msg}</div>
+{/foreach}
