@@ -8,6 +8,7 @@
 
 require('conexao.php');
 class user extends conexao {
+	
 	private $nome;
 	private $sobrenome;
 	private $date;

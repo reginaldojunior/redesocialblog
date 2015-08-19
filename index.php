@@ -21,8 +21,16 @@ switch ($router) {
 			exit();
 		}
 
-		echo 'paramos aqui';
-		exit();
+		$smarty->assign('usuario', $_SESSION['usuario']);
+
+		require('classes/profile.php');
+		$profile = new profile();
+		
+		$smarty->assign('posts', $profile->loadPostsUserLogged());
+
+		$smarty->display('container/header.html');
+		$smarty->display('profile/home.html');
+		$smarty->display('container/footer.html');
 	break;
 
 	case 'create':
